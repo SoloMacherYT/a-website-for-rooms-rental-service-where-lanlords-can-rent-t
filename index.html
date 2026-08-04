@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior:smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusCribs — Student Housing & Verified Room Rentals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563EB;
+      --primary-dark: #1D4ED8;
+      --primary-light: #EFF6FF;
+      --accent: #10B981;
+      --accent-light: #ECFDF5;
+      --warm: #F59E0B;
+      --ink: #0F172A;
+      --muted: #64748B;
+      --bg: #F8FAFC;
+      --bg-soft: #F1F5F9;
+      --surface: #FFFFFF;
+      --border: #E2E8F0;
+      --radius-sm: 0.5rem;
+      --radius: 0.875rem;
+      --radius-lg: 1.25rem;
+      --shadow-sm: 0 2px 8px -2px rgba(15,23,42,0.06);
+      --shadow: 0 12px 32px -8px rgba(15,23,42,0.1);
+      --shadow-lg: 0 20px 40px -12px rgba(37,99,235,0.18);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    [data-page] {
+      animation: pageIn 0.25s ease-out;
+    }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* HEADER & NAVBAR */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #3B82F6);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    .logo span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--muted);
+      transition: all 0.2s ease;
+      padding: 0.4rem 0.2rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.4rem;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+      line-height: 1;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-soft);
+      border-color: #CBD5E1;
+      transform: translateY(-1px);
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, var(--accent), #059669);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-accent:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      border-radius: var(--radius-sm);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.85rem;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(37, 99, 235, 0.15);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      padding: 4rem 0 clamp(3rem, 6vw, 5rem);
+      background: radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 10% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 50%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      line-height: 1.15;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-text h1 span {
+      background: linear-gradient(135deg, var(--primary), #1D4ED8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-text p {
+      font-size: 1.125rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      max-width: 540px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-trust-line {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .avatars {
+      display: flex;
+    }
+
+    .avatar-stack {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--surface);
+      margin-left: -8px;
+      object-fit: cover;
+    }
+
+    .avatar-stack:first-child { margin-left: 0; }
+
+    /* HERO VISUAL MOCKUP */
+    .hero-visual {
+      position: relative;
+    }
+
+    .search-card-mock {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative;
+      z-index: 2;
+    }
+
+    .mock-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mock-header .badge {
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .mock-room-preview {
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+
+    .mock-room-preview img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .mock-room-price {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--radius-sm);
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+
+    .mock-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      text-align: center;
+    }
+
+    .mock-pill {
+      background: var(--bg-soft);
+      padding: 0.5rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .floating-badge-1 {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      background: var(--surface);
+      padding: 0.85rem 1.2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border: 1px solid var(--border);
+      z-index: 3;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .floating-badge-2 {
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      background: var(--surface);
+      padding: 0.85rem 1.2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border: 1px solid var(--border);
+      z-index: 3;
+      animation: float 4s ease-in-out infinite 2s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* TRUST BAR */
+    .trust-bar {
+      padding: 2rem 0;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-item .number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .stat-item .label {
+      font-size: 0.875rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* SECTIONS GENERAL */
+    section {
+      padding: clamp(3rem, 5vw, 5rem) 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto 3rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    /* CARDS & GRIDS */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.75rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: rgba(37, 99, 235, 0.3);
+    }
+
+    .icon-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      background: var(--primary-light);
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* ROOM CARDS */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .room-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .room-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+      border-color: #CBD5E1;
+    }
+
+    .room-thumb {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .room-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .room-card:hover .room-thumb img {
+      transform: scale(1.04);
+    }
+
+    .room-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(6px);
+      color: #fff;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .room-verified {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--accent);
+      color: #fff;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .room-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .room-location {
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.35rem;
+    }
+
+    .room-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .room-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .room-specs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      margin-top: auto;
+    }
+
+    .spec-pill {
+      background: var(--bg-soft);
+      color: var(--ink);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .room-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .room-price {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .room-price span {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+
+    /* HOW IT WORKS STEPS */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      position: relative;
+    }
+
+    .step-card {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .step-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .step-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* TESTIMONIALS */
+    .testimonial-card {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .testimonial-text {
+      font-size: 1rem;
+      color: var(--ink);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-user {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .testimonial-user img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .user-info h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .user-info p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* CTA BAND */
+    .cta-band {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #ffffff;
+      border-radius: var(--radius-lg);
+      padding: clamp(2.5rem, 5vw, 4rem) 2rem;
+      text-align: center;
+      margin: 2rem 0;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .cta-band h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .cta-band p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 580px;
+      margin: 0 auto 2rem;
+    }
+
+    .cta-band .btn {
+      background: #ffffff;
+      color: var(--primary-dark);
+      font-size: 1.05rem;
+      padding: 0.9rem 2rem;
+    }
+
+    .cta-band .btn:hover {
+      background: var(--bg-soft);
+      transform: translateY(-2px);
+    }
+
+    /* FILTER BAR FOR EXPLORE PAGE */
+    .filter-box {
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2.5rem;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) auto;
+      gap: 1rem;
+      align-items: end;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 0.9rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--ink);
+      transition: border-color 0.2s;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    /* AUTH CARDS */
+    .auth-card {
+      max-width: 440px;
+      margin: 3rem auto;
+      background: var(--surface);
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .auth-card h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .auth-card .auth-sub {
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .role-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      background: var(--bg-soft);
+      padding: 0.35rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.5rem;
+    }
+
+    .role-btn {
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      color: var(--muted);
+      background: transparent;
+      border: none;
+    }
+
+    .role-btn.active {
+      background: var(--surface);
+      color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .auth-footer-link {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .auth-footer-link a {
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* LANDLORD CALCULATOR & PAGE STYLES */
+    .calc-card {
+      background: linear-gradient(135deg, #0F172A, #1E293B);
+      color: #ffffff;
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .calc-card h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .calc-result {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin: 1rem 0;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: #94A3B8;
+      padding: 4rem 0 2rem;
+      border-top: 1px solid #1E293B;
+      font-size: 0.9rem;
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .foot-col h4 {
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+    }
+
+    .foot-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .foot-col a:hover {
+      color: #ffffff;
+    }
+
+    .foot-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid #1E293B;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+
+    /* RESPONSIVE BREAKPOINTS */
+    @media (max-width: 768px) {
+      .container { padding: 0 1rem; }
+      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+      .mock-room-preview img { height: 180px; }
+      .floating-badge-1, .floating-badge-2 { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-bar { flex-wrap: wrap; gap: 0.5rem; height: auto; padding: 0.75rem 0; }
+      .nav-links { display: flex; flex-wrap: wrap; gap: 0.75rem; width: 100%; margin-top: 0.25rem; }
+      .nav-links a { font-size: 0.82rem; padding: 0.2rem 0.4rem; }
+      .nav-actions { margin-left: auto; }
+      .hero { padding: 2.5rem 0; }
+      .hero-text h1 { font-size: 1.9rem; }
+      .hero-ctas { flex-direction: column; }
+      .hero-ctas .btn { width: 100%; }
+      .product-grid, .grid-3, .steps-grid { grid-template-columns: 1fr !important; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr; text-align: left; }
+      .auth-card { margin: 1.5rem 0; padding: 1.5rem; }
+      .filter-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+<style id="__mintsite_fix__">
+/* ── mintsite auto-fix: prevent overlapping + force responsiveness ── */
+*, *::before, *::after { box-sizing:border-box; }
+html, body { max-width:100% !important; overflow-x:hidden !important; margin:0 !important; padding-left:0 !important; padding-right:0 !important; }
+body { position:relative; }
+h1, h2, h3, h4, p, a, span, button, label { overflow-wrap:break-word !important; word-break:break-word; max-width:100%; }
+img, svg, video, iframe { max-width:100% !important; height:auto; display:block; }
+
+/* ── Defensive default-styles override — kicks in when the AI (especially
+   Groq's llama-3.3-70b) skips styling links and buttons. Keeps every site
+   looking polished even when the AI's CSS is thin. ── */
+
+/* Links: no default blue/underline anywhere. The AI almost never overrides
+   this for footer/secondary links, so it leaks browser defaults. */
+a { color:inherit !important; text-decoration:none !important; }
+a:hover { text-decoration:none; }
+
+/* Footer column links: ensure they're light-on-dark, no underline, soft hover. */
+footer a, [class*="footer"] a { color:rgba(255,255,255,.78) !important; transition:color .15s; }
+footer a:hover, [class*="footer"] a:hover { color:#fff !important; }
+
+/* Footer headings (column titles like "Browse" "Account" "Follow"): uppercase
+   eyebrow style so they don't look like raw h4s. */
+footer h3, footer h4, footer h5, [class*="footer"] h3, [class*="footer"] h4 {
+  font-size:.78rem !important; letter-spacing:.08em !important; text-transform:uppercase !important;
+  color:rgba(255,255,255,.55) !important; font-weight:600 !important; margin-bottom:1rem !important;
+}
+/* Footer list items: no bullet, tight spacing. */
+footer ul, [class*="footer"] ul { list-style:none !important; padding-left:0 !important; margin:0 !important; }
+footer ul li, [class*="footer"] ul li { padding:.3rem 0 !important; }
+
+/* Buttons: never the chrome-default look. Round + cursor + smooth transition.
+   Specific .add-to-cart styling lives below this. */
+button:not(.cart-icon):not(.__ms-hamburger):not(.__ms-x):not(.__ms-cart-checkout) {
+  cursor:pointer; border-radius:.5rem; font-family:inherit; transition:transform .15s, box-shadow .15s, background .15s;
+}
+
+/* .add-to-cart — primary CTA on product cards. AI usually forgets the
+   gradient + padding even when we ask for it. Force a baseline. */
+.add-to-cart, [data-add-to-cart] {
+  display:inline-flex !important; align-items:center !important; gap:.4rem !important;
+  padding:.6rem 1.1rem !important;
+  border-radius:.55rem !important;
+  background:linear-gradient(135deg, var(--primary, #1d4ed8), color-mix(in srgb, var(--primary, #1d4ed8) 72%, #000)) !important;
+  color:#fff !important; font-weight:600 !important; font-size:.88rem !important;
+  border:0 !important; cursor:pointer !important;
+  box-shadow:0 6px 18px -6px rgba(0,0,0,.25) !important;
+  transition:transform .15s, box-shadow .15s, filter .15s !important;
+}
+.add-to-cart:hover, [data-add-to-cart]:hover {
+  transform:translateY(-1px) !important; filter:brightness(1.08) !important;
+  box-shadow:0 10px 26px -6px rgba(0,0,0,.35) !important;
+}
+
+/* Product price tag — bold, accent color (not raw body text). */
+.price, .product-card .price, [class*="price-row"] .price {
+  font-size:1.1rem !important; font-weight:700 !important;
+  color:var(--primary, #1d4ed8) !important;
+}
+
+/* ── Form fields — the AI very often leaves inputs/textareas browser-default
+   (no border radius, labels inline). Give every form a clean baseline so
+   contact / sign-in / sign-up forms always look intentional. ── */
+form input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),
+form textarea, form select {
+  display:block !important; width:100% !important; box-sizing:border-box !important;
+  padding:.7rem .9rem !important; margin-top:.35rem !important;
+  border:1px solid rgba(15,23,42,.16) !important; border-radius:.6rem !important;
+  background:#fff !important; color:#0f172a !important;
+  font-size:.95rem !important; font-family:inherit !important; line-height:1.4 !important;
+  transition:border-color .15s, box-shadow .15s !important;
+}
+form input::placeholder, form textarea::placeholder { color:#94a3b8 !important; }
+form input:focus, form textarea:focus, form select:focus {
+  outline:none !important; border-color:var(--primary,#6366f1) !important;
+  box-shadow:0 0 0 3px rgba(99,102,241,.18) !important;
+}
+form textarea { min-height:120px !important; resize:vertical !important; }
+form label {
+  display:block !important; margin-top:.9rem !important; margin-bottom:.1rem !important;
+  font-size:.85rem !important; font-weight:600 !important; color:#334155 !important;
+}
+/* Submit buttons inside forms get the primary look if the AI under-styled them. */
+form button[type="submit"], form .btn-primary {
+  display:inline-flex !important; align-items:center !important; justify-content:center !important;
+  gap:.4rem !important; margin-top:1.1rem !important;
+  padding:.75rem 1.4rem !important; border:0 !important; border-radius:.6rem !important;
+  background:linear-gradient(135deg, var(--primary,#1d4ed8), color-mix(in srgb, var(--primary,#1d4ed8) 72%, #000)) !important;
+  color:#fff !important; font-weight:600 !important; font-size:.95rem !important; cursor:pointer !important;
+}
+
+/* Generic primary/ghost buttons + nav links the AI may have under-styled. */
+.btn-primary, [class*="btn-primary"] {
+  background:linear-gradient(135deg, var(--primary, #1d4ed8), color-mix(in srgb, var(--primary, #1d4ed8) 72%, #000)) !important;
+  color:#fff !important; padding:.7rem 1.4rem !important;
+  border-radius:.6rem !important; border:0 !important; font-weight:600 !important;
+}
+
+/* Lists rendered by the AI in the body should not be bullet-defaulted blue. */
+main ul:not([role]):not([class]), main ol:not([role]):not([class]) {
+  list-style:none !important; padding-left:0 !important;
+}
+.blob, [class*="blob"], [class*="gradient-orb"], [class*="bg-blur"] {
+  position:fixed !important; z-index:0 !important; opacity:.15 !important;
+  pointer-events:none !important; max-width:500px !important; max-height:500px !important;
+}
+section, main, .hero, [id="home"], [id="features"], [id="pricing"],
+[id="testimonials"], [id="faq"], [id="contact"], [id="about"],
+[id="cta"], [id="how-it-works"], article, .container {
+  position:relative; z-index:1; max-width:100%;
+}
+header, nav.nav, .navbar, [class*="header"], [class*="navbar"] {
+  position:sticky !important; top:0 !important; z-index:50 !important;
+  background:rgba(255,255,255,.92) !important; backdrop-filter:blur(12px) !important;
+  -webkit-backdrop-filter:blur(12px) !important;
+}
+.hero-card, [class*="hero-card"], [class*="hero-image"], [class*="hero-visual"] {
+  max-width:100% !important; overflow:hidden;
+}
+[class*="grid"] { max-width:100%; }
+
+/* ── Bulletproof card grids: never collapse so narrow that text wraps one
+   letter per line. auto-fit + minmax keeps each card >=240px and wraps to
+   fewer columns instead of squishing. Overrides brittle repeat(3,1fr). ── */
+.product-grid, [class*="product-grid"], .grid-2, .grid-3, .grid-4,
+[class*="grid-2"], [class*="grid-3"], [class*="grid-4"] {
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit, minmax(min(100%, 240px), 1fr)) !important;
+  gap:1.5rem !important; align-items:stretch !important;
+}
+/* If a grid lands on a SECTION's container by mistake, force heading, intro AND
+   the card grid to span the full row so cards lay out properly. Scoped to
+   sections only — footers use .container too and must keep their columns. */
+section > h1, section > h2, section > h3, section > p, section > .product-grid,
+section .container > h1, section .container > h2, section .container > h3,
+section .container > p, section .container > .product-grid {
+  grid-column:1 / -1 !important;
+}
+/* Price + Add to Cart never break to one-letter-per-line. */
+.price, .add-to-cart, [data-add-to-cart] { white-space:nowrap !important; }
+
+/* Keep section padding sane — huge AI padding (6-8rem) leaves big empty gaps
+   between components. Hero keeps its own padding. */
+section:not(.hero):not([class*="hero"]):not([id="home"]):not([id="hero"]) {
+  padding-top:clamp(2.5rem, 5vw, 4rem) !important;
+  padding-bottom:clamp(2.5rem, 5vw, 4rem) !important;
+}
+
+/* Non-home page headers reuse .hero (a 2-column flex) → their heading/text
+   children squish into a narrow column. Let them wrap + span full row. */
+.hero > .container, .hero-content, .hero .container { flex-wrap:wrap; }
+.hero > .container > h1, .hero > .container > h2, .hero > .container > h3,
+.hero > .container > p, .hero > .container > span, .hero > .container > .eyebrow,
+.hero > .container > .btn, .hero > .container > .ctas, .hero > .container > a {
+  flex-basis:100% !important; max-width:100% !important;
+}
+/* CTA-band button stays readable (white pill + brand-colour text). */
+.cta-band .btn, .cta-band a.btn, .cta-band button,
+.cta-section .btn, .cta-section a.btn {
+  background:#fff !important; color:var(--primary, #1d4ed8) !important; border-color:#fff !important;
+}
+
+/* Auth cards: tighter margin, sensible heading size (the AI's big clamp wraps
+   "Create Your account" one word per line), and no tall forced min-height. */
+.auth-card, [class*="auth-card"] { margin:1.5rem auto !important; }
+.auth-card h1, .auth-card h2, [class*="auth-card"] h1, [class*="auth-card"] h2 {
+  font-size:clamp(1.4rem, 3.5vw, 2rem) !important; line-height:1.2 !important;
+}
+[id="signin"], [id="signup"], [id="login"],
+[data-page="signin"], [data-page="signup"] { min-height:auto !important; }
+footer, [class*="footer"] { position:relative !important; z-index:1; max-width:100%; }
+
+/* ── TABLET (≤768px): grids→1col, hero stacks, slightly smaller type ── */
+@media(max-width:768px) {
+  .container, [class*="container"] { padding-left:1rem !important; padding-right:1rem !important; }
+  .hero, [class*="hero-grid"], [id="home"] > div, [id="home"] > .container > div {
+    display:flex !important; flex-direction:column !important; gap:1.5rem !important;
+  }
+  .hero-card, [class*="hero-card"], [class*="hero-image"], [class*="hero-visual"] {
+    max-width:100% !important; margin:0 auto !important; width:100% !important;
+  }
+  [class*="grid-3"], [class*="grid-4"], .grid-3, .grid-4, .grid-2, [class*="grid-2"] {
+    grid-template-columns:1fr 1fr !important; gap:1rem !important;
+  }
+  h1 { font-size:clamp(1.6rem,5vw,2.4rem) !important; line-height:1.15 !important; }
+  h2 { font-size:clamp(1.3rem,4vw,1.9rem) !important; line-height:1.2 !important; }
+  h3 { font-size:1rem !important; }
+  p, .lead { font-size:.95rem !important; }
+  section { padding-top:2.5rem !important; padding-bottom:2.5rem !important; }
+  .auth-card, [class*="auth-card"] { max-width:100% !important; margin:2rem 1rem !important; padding:1.5rem !important; }
+}
+
+/* ── PHONE (≤480px): everything stacks single column, type shrinks more ── */
+@media(max-width:480px) {
+  .container, [class*="container"] { padding-left:.85rem !important; padding-right:.85rem !important; }
+  /* Header: stack logo + nav vertically, smaller logo, hamburger pattern */
+  header > div, header > nav, .nav > .inner, [class*="header"] > div {
+    flex-wrap:wrap !important; gap:.5rem !important; padding-top:.5rem !important; padding-bottom:.5rem !important;
+    height:auto !important; min-height:56px !important;
+  }
+  header nav, header .links, [class*="header"] nav, [class*="nav-links"] {
+    display:flex !important; flex-wrap:wrap !important; gap:.25rem !important; width:100%; justify-content:center;
+  }
+  header nav a, header .links a, [class*="nav-links"] a {
+    padding:.35rem .65rem !important; font-size:.82rem !important;
+  }
+  header .auth, [class*="auth-buttons"], [class*="header-auth"] {
+    margin-left:0 !important; gap:.3rem !important;
+  }
+  header .auth a, [class*="auth-buttons"] a {
+    padding:.4rem .75rem !important; font-size:.8rem !important;
+  }
+  .logo { font-size:.95rem !important; }
+  .cart-icon { padding:6px !important; font-size:18px !important; }
+  /* Hero: stack and shrink */
+  .hero, [class*="hero-grid"] { gap:1rem !important; padding-top:1.5rem !important; }
+  h1 { font-size:clamp(1.4rem,7vw,1.9rem) !important; }
+  h2 { font-size:clamp(1.15rem,5vw,1.5rem) !important; }
+  /* All grids collapse to single column */
+  [class*="grid-3"], [class*="grid-4"], .grid-3, .grid-4, .grid-2, [class*="grid-2"],
+  .product-grid, [class*="product-grid"] {
+    grid-template-columns:1fr !important; gap:1rem !important;
+  }
+  /* Buttons: full-width-ish, touch-friendly */
+  .btn-primary, .btn-ghost, button[type="submit"], .ctas a, .ctas button {
+    width:auto !important; min-height:44px !important; padding:.75rem 1.25rem !important; font-size:.9rem !important;
+  }
+  .ctas { flex-direction:column !important; gap:.6rem !important; width:100%; }
+  .ctas > * { width:100% !important; text-align:center; }
+  /* Product/feature cards tighter */
+  .product-card, .card, article {
+    padding:1rem !important;
+  }
+  .product-card img, .card img { aspect-ratio:1/1 !important; }
+  /* Footer: stack columns */
+  footer, [class*="footer"] {
+    text-align:center; padding-top:2rem !important; padding-bottom:1.5rem !important;
+  }
+  footer .foot-grid, footer [class*="foot-grid"], footer .columns {
+    grid-template-columns:1fr !important; gap:1.5rem !important;
+  }
+  footer .brand-block, footer [class*="brand-block"] {
+    margin:0 auto; max-width:280px;
+  }
+  /* Section padding shrinks more on phones */
+  section { padding-top:2rem !important; padding-bottom:2rem !important; }
+  /* Tables (if any) become scrollable */
+  table { display:block; overflow-x:auto; white-space:nowrap; }
+}
+
+/* ── Hard safety net: any element that's wider than viewport gets wrapped ── */
+@media(max-width:768px) {
+  body > * { max-width:100vw !important; }
+  pre, code { white-space:pre-wrap !important; word-break:break-word !important; }
+}
+</style>
+</head>
+<body>
+
+  <!-- PERSISTENT STICKY HEADER NAVBAR -->
+  <header>
+    <div class="container nav-bar">
+      <a href="#home" class="logo">
+        <div class="logo-icon">🏠</div>
+        Campus<span>Cribs</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#rooms">Find Rooms</a></li>
+        <li><a href="#landlords">For Landlords</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#signin" class="btn btn-secondary btn-sm">Sign In</a>
+        <a href="#signup" class="btn btn-primary btn-sm">List / Join</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- PAGE 1: HOME -->
+  <main data-page="home" class="page-route">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <div class="eyebrow">🎓 Built for Students & Verified Landlords</div>
+          <h1>Find student rooms you’ll <span>love to live in</span></h1>
+          <p>Skip the shady Craigslist posts and high broker fees. Discover verified, budget-friendly rooms near your university campus with flexible student lease terms.</p>
+          <div class="hero-ctas">
+            <a href="#rooms" class="btn btn-primary">
+              🔍 Search Near Campus
+            </a>
+            <a href="#landlords" class="btn btn-secondary">
+              🏡 List Your Property
+            </a>
+          </div>
+          <div class="hero-trust-line">
+            <div class="avatars">
+              <img class="avatar-stack" src="https://images.unsplash.com/photo-1506863530036-1efeddceb993?ixid=M3wxMDA0NDk4fDB8MXxzZWFyY2h8MXx8c3R1ZGVudCUyMHBvcnRyYWl0JTJGMTAxfGVufDF8fHx8MTc4NTgxNTY0N3ww&ixlib=rb-4.1.0&w=800&h=600&fit=crop&q=80" alt="Student avatar" onerror="this.onerror=null;this.src='https://picsum.photos/seed/student1/100/100'">
+              <img class="avatar-stack" src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixid=M3wxMDA0NDk4fDB8MXxzZWFyY2h8MXx8c3R1ZGVudCUyMHdvbWFuJTJGMTAyfGVufDF8fHx8MTc4NTgxNTY0OHww&ixlib=rb-4.1.0&w=800&h=600&fit=crop&q=80" alt="Student avatar" onerror="this.onerror=null;this.src='https://picsum.photos/seed/student2/100/100'">
+              <img class="avatar-stack" src="https://images.unsplash.com/photo-1544168190-79c17527004f?ixid=M3wxMDA0NDk4fDB8MXxzZWFyY2h8MXx8c3R1ZGVudCUyMG1hbiUyRjEwM3xlbnwxfHx8fDE3ODU4MTU2NDl8MA&ixlib=rb-4.1.0&w=800&h=600&fit=crop&q=80" alt="Student avatar" onerror="this.onerror=null;this.src='https://picsum.photos/seed/student3/100/100'">
+              <img class="avatar-stack" src="https://images.unsplash.com/photo-1503676382389-4809596d5290?ixid=M3wxMDA0NDk4fDB8MXxzZWFyY2h8MXx8c3R1ZGVudCUyMHBlcnNvbiUyRjEwNHxlbnwxfHx8fDE3ODU4MTU2NDl8MA&ixlib=rb-4.1.0&w=800&h=600&fit=crop&q=80" alt="Student avatar" onerror="this.onerror=null;this.src='https://picsum.photos/seed/student4/100/100'">
+            </div>
+            <span>Trusted by 14,000+ students across 50+ university towns</span>
+          </div>
+        </div>
+
+        <!-- HERO VISUAL MOCK -->
+        <div class="hero-visual">
+          <div class="search-card-mock">
+            <div class="mock-header">
+              <div>
+                <strong style="font-size: 1.1rem; display: block;">Harvard Square Loft</strong>
+                <span style="font-size: 0.85rem; color: var(--muted);">5 min walk to Campus</span>
+              </div>
+              <span class="badge">Verified Landlord</span>
+            </div>
+            <div class="mock-room-preview">
+              <img src="https://images.unsplash.com/photo-1630699033486-1c023b58bf77?ixid=M3wxMDA0NDk4fDB8MXxzZWFyY2h8MXx8YmVkcm9vbSUyMGFwYXJ0bWVudCUyRjEwNXxlbnwxfHx8fDE3ODU4MTU2NTB8MA&ixlib=rb-4.1.0&w=800&h=600&fit=crop&q=80" alt="Harvard Square Loft Student Room" onerror="this.onerror=null;this.src='https://picsum.photos/seed/HarvardRoom/600/400'">
+              <div class="mock-room-price">$980 <span>/ mo</span></div>
+            </div>
+            <div class="mock-details">
+              <div class="mock-pill">⚡ All Utilities Incl.</div>
+              <div class="mock-pill">📶 High-Speed WiFi</div>
+              <div class="mock-pill">🔐 Smart Lock Entry</div>
+            </div>
+          </div>
+
+          <div class="floating-badge-1">
+            <span style="font-size: 1.5rem;">✅</span>
+            <div>
+              <strong style="font-size: 0.85rem; display: block;">Background Checked</strong>
+              <span style="font-size: 0.75rem; color: var(--muted);">100% Student Safe</span>
+            </div>
+          </div>
+
+          <div class="floating-badge-2">
+            <span style="font-size: 1.5rem;">⚡</span>
+            <div>
+              <strong style="font-size: 0.85rem; display: block;">Zero Broker Fees</strong>
+              <span style="font-size: 0.75rem; color: var(--muted);">Direct landlord chat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST METRICS BAR -->
+    <div class="trust-bar">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="number">12,400+</div>
+            <div class="label">Verified Rooms Listed</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">52</div>
+            <div class="label">University Hubs Covered</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">$0</div>
+            <div class="label">Broker Fees Charged</div>
+          </div>
+          <div class="stat-item">
+            <div class="number">4.9 / 5</div>
+            <div class="label">Average Student Rating</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES SECTION -->
+    <section>
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow">Why CampusCribs?</div>
+          <h2>Designed specifically for student living & easy landlording</h2>
+          <p>We eliminate housing stress by connecting verified property owners directly with university students.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="feature-card">
+            <div class="icon-badge">🛡️</div>
+            <h3>100% Verified Identity</h3>
+            <p>Every landlord and student undergoes real ID verification to ensure complete safety and peace of mind before moving in.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-badge">📍</div>
+            <h3>Campus Proximity Distance</h3>
+            <p>Search rooms by walking or transit duration to your exact campus lecture halls, library, or engineering building.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-badge">📅</div>
+            <h3>Semester & Full-Year Leases</h3>
+            <p>Find landlords open to flexible 9-month academic year leases or summer internship sublets without penalty.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-badge">💬</div>
+            <h3>Direct In-App Messaging</h3>
+            <p>Chat directly with landlords, schedule virtual room tours, and discuss roommate preferences securely inside our portal.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-badge">💳</div>
+            <h3>Online Rent & Deposit Protection</h3>
+            <p>Pay your deposit and monthly rent easily with bank-grade encryption and escrow hold protection until move-in day.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-badge">🤝</div>
+            <h3>Roommate Match Preview</h3>
+            <p>See lifestyle compatibility scores (study habits, sleep schedules, cleanliness) for rooms with existing roommates.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED ROOMS PREVIEW GRID -->
+    <section style="background: var(--bg-soft);">
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow">Top Picked Cribs</div>
+          <h2>Trending rooms near popular universities</h2>
+          <p>Hand-picked, high-rated rooms with verified utility bills and fast campus commutes.</p>
+        </div>
+
+        <div class="product-grid">
+          <!-- Room Card 1 -->
+          <article class="room-card">
+            <div class="room-thumb">
+              <span class="room-tag">3 Min Walk to Campus</span>
+              <span class="room-verified">✓ Verified</span>
+              <img src="https://loremflickr.com/600/400/bedroom,desk/106" alt="Sunlit Private Suite" onerror="this.onerror=null;this.src='https://picsum.photos/seed/room201/600/400'">
+            </div>
+            <div class="room-body">
+              <div class="room-location">Harvard University Hub</div>
+              <h3 class="room-title">Sunlit Private Suite with Study Nook</h3>
+              <p class="room-desc">Quiet room with natural light, modern desk set up, and ultra-fast optical fiber internet included.</p>
+              <div class="room-specs">
+                <span class="spec-pill">Furnished</span>
+                <span class="spec-pill">Private Bath</span>
+                <span class="spec-pill">All Utilities Included</span>
+              </div>
+              <div class="room-footer">
+                <div class="room-price">$1,150 <span>/ month</span></div>
+                <a href="#contact" class="btn btn-secondary btn-sm">Inquire Room</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Room Card 2 -->
+          <article class="room-card">
+            <div class="room-thumb">
+              <span class="room-tag">8 Min Transit to NYU</span>
+              <span class="room-verified">✓ Verified</span>
+              <img src="https://loremflickr.com/600/400/apartment,interior/107" alt="Modern Washington Sq Suite" onerror="this.onerror=null;this.src='https://picsum.photos/seed/room202/600/400'">
+            </div>
+            <div class="room-body">
+              <div class="room-location">NYU Washington Square</div>
+              <h3 class="room-title">Modern Room in 3-Bed Student Apt</h3>
+              <p class="room-desc">Living with 2 friendly engineering seniors. In-unit washer/dryer and keyless entry.</p>
+              <div class="room-specs">
+                <span class="spec-pill">In-Unit Laundry</span>
+                <span class="spec-pill">AC/Heating</span>
+                <span class="spec-pill">Flex Semester Lease</span>
+              </div>
+              <div class="room-footer">
+                <div class="room-price">$1,380 <span>/ month</span></div>
+                <a href="#contact" class="btn btn-secondary btn-sm">Inquire Room</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Room Card 3 -->
+          <article class="room-card">
+            <div class="room-thumb">
+              <span class="room-tag">5 Min Walk to Berkeley</span>
+              <span class="room-verified">✓ Verified</span>
+              <img src="https://loremflickr.com/600/400/room,cozy/108" alt="Cozy UC Berkeley Room" onerror="this.onerror=null;this.src='https://picsum.photos/seed/room203/600/400'">
+            </div>
+            <div class="room-body">
+              <div class="room-location">UC Berkeley Telegraph Ave</div>
+              <h3 class="room-title">Cozy Balcony Bedroom near Sproul</h3>
+              <p class="room-desc">Private balcony access, large closet space, and shared gourmet kitchen in renovated home.</p>
+              <div class="room-specs">
+                <span class="spec-pill">Balcony</span>
+                <span class="spec-pill">Female Roommates</span>
+                <span class="spec-pill">High-Speed WiFi</span>
+              </div>
+              <div class="room-footer">
+                <div class="room-price">$950 <span>/ month</span></div>
+                <a href="#contact" class="btn btn-secondary btn-sm">Inquire Room</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div style="text-align: center; margin-top: 2.5rem;">
+          <a href="#rooms" class="btn btn-primary">Browse All 1,200+ Available Rooms →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section>
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow">Seamless Process</div>
+          <h2>How CampusCribs works in 4 simple steps</h2>
+          <p>Whether you're renting out a spare bedroom or searching for your sophomore pad, we make it effortless.</p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Search or List Space</h3>
+            <p>Students set their price range and target university campus. Landlords post room photos and house rules in minutes.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Verify & Tour</h3>
+            <p>Connect safely via verified profiles and schedule an in-person walk-through or live video tour.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Sign Digital Lease</h3>
+            <p>Complete standard student lease agreements digitally with clear breakdown of utilities and house expectations.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <h3>Move In & Enjoy</h3>
+            <p>Pay deposit securely via escrow. Get keys on move-in day with 24/7 student support backing your stay.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section style="background: var(--bg-soft);">
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow">Real Stories</div>
+          <h2>Loved by students and property owners</h2>
+          <p>Read how CampusCribs transformed off-campus living for thousands of users.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Finding a decent room near NYU without paying $3,000 in broker fees felt impossible until I used CampusCribs. Had my room locked in within 3 days!"</p>
+            <div class="testimonial-user">
+              <img src="https://loremflickr.com/100/100/student,woman/109" alt="Maya Lin student avatar" onerror="this.onerror=null;this.src='https://picsum.photos/seed/t1/100/100'">
+              <div class="user-info">
+                <h4>Maya Lin</h4>
+                <p>Junior at NYU Tisch</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"As a landlord near UT Austin, CampusCribs guarantees responsible student tenants. The automated background check saves me hours every semester."</p>
+            <div class="testimonial-user">
+              <img src="https://loremflickr.com/100/100/landlord,man/110" alt="Robert Vance landlord avatar" onerror="this.onerror=null;this.src='https://picsum.photos/seed/t2/100/100'">
+              <div class="user-info">
+                <h4>Robert Vance</h4>
+                <p>Landlord (4 Units near UT Austin)</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"The roommate matching insights were super accurate! I ended up moving in with two great guys who are in the same CS program as me."</p>
+            <div class="testimonial-user">
+              <img src="https://loremflickr.com/100/100/student,guy/111" alt="Alex Rivera student avatar" onerror="this.onerror=null;this.src='https://picsum.photos/seed/t3/100/100'">
+              <div class="user-info">
+                <h4>Alex Rivera</h4>
+                <p>Graduate Student at Michigan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <div class="container">
+      <div class="cta-band">
+        <h2>Ready to find your ideal student room or tenant?</h2>
+        <p>Join thousands of university students and property owners enjoying secure, transparent room rentals today.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="#rooms" class="btn">Explore Available Rooms</a>
+          <a href="#signup" class="btn" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3);">Create Free Account</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- PAGE 2: EXPLORE ROOMS -->
+  <main data-page="rooms" class="page-route" hidden>
+    <section style="padding-top: 2rem;">
+      <div class="container">
+        <div class="section-header" style="margin-bottom: 2rem;">
+          <div class="eyebrow">Explore Available Rooms</div>
+          <h2>Find your ideal crib near campus</h2>
+          <p>Filter by university hub, price budget, utilities, and move-in availability dates.</p>
+        </div>
+
+        <!-- SEARCH / FILTER FORM BAR -->
+        <div class="filter-box">
+          <form class="filter-grid" action="#rooms" method="GET">
+            <div class="form-group">
+              <label for="filter-university">University Campus</label>
+              <select id="filter-university" class="form-control">
+                <option value="">All Universities</option>
+                <option value="harvard">Harvard University</option>
+                <option value="nyu">New York University (NYU)</option>
+                <option value="berkeley">UC Berkeley</option>
+                <option value="ut-austin">UT Austin</option>
+                <option value="umich">University of Michigan</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="filter-price">Max Monthly Price</label>
+              <select id="filter-price" class="form-control">
+                <option value="">Any Budget</option>
+                <option value="800">Under $800 / mo</option>
+                <option value="1100">Under $1,100 / mo</option>
+                <option value="1500">Under $1,500 / mo</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="filter-type">Room Type</label>
+              <select id="filter-type" class="form-control">
+                <option value="">All Types</option>
+                <option value="private">Private Bedroom</option>
+                <option value="ensuite">En-suite Bath Room</option>
+                <option value="studio">Studio Apartment</option>
+                <option value="shared">Shared Bedroom</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="filter-lease">Lease Duration</label>
+              <select id="filter-lease" class="form-control">
+                <option value="">Any Duration</option>
+                <option value="9mo">Academic Year (9 Mos)</option>
+                <option value="12mo">Full Year (12 Mos)</option>
+                <option value="summer">Summer Sublet (3 Mos)</option>
+              </select>
+            </div>
+
+            <div>
+              <button type="submit" class="btn btn-primary" style="width: 100%;">
+                Apply Filters
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- 6 ROOM LISTINGS -->
+        <div class="product-grid">
+          <!-- Room 1 -->
+          <article class="room-card">
+            <div class="room-thumb">
+              <span class="room-tag">3 Min Walk to Campus</span>
+              <span class="room-verified">✓ Verified</span>
+              <img src="https://loremflickr.com/600/400/bedroom,desk/106" alt="Sunlit Private Suite" onerror="this.onerror=null;this.src='https://picsum.photos/seed/room201/600/400'">
+            </div>
+            <div class="room-body">
+              <div class="room-location">Harvard University Hub</div>
+              <h3 class="room-title">Sunlit Private Suite with Study Nook</h3>
+              <p class="room-desc">Quiet room with natural light, modern desk set up, and ultra-fast optical fiber internet included.</p>
+              <div class="room-specs">
+                <span class="spec-pill">Furnished</span>
+                <span class="spec-pill">Private Bath</span>
+                <span class="spec-pill">All Utilities Incl.</span>
+              </div>
+              <div class="room-footer">
+                <div class="room-price">$1,150 <span>/ month</span></div>
+                <a href="#contact" class="btn btn-secondary btn-sm">Inquire Room</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Room 2 -->
+          <article class="room-card">
+            <div class="room-thumb">
+              <span class="room-tag">8 Min Transit to NYU</span>
+              <span class="room-verified">✓ Verified</span>
+              <img src="https://loremflickr.com/600/400/apartment,interior/107" alt="Modern Washington Sq Suite" onerror="this.onerror=null;this.src='https://picsum.photos/seed/room202/600/400'">
+            </div>
+            <div class="room-body">
+              <div class="room-location">NYU Washington Square</div>
+              <h3 class="room-title">Modern Room in 3-Bed Student Apt</h3>
+              <p class="room-desc">Living with 2 friendly engineering seniors. In-unit washer/dryer and keyless entry.</p>
+              <div class="room-specs">
+                <span class="spec-pill">In-Unit Laundry</span>
+                <span class="spec-pill">AC/Heating</span>
+                <span class="spec-pill">Flex Lease</span>
+              </div>
+              <div class="room-footer">
+                <div class="room-price">$1,380 <span>/ month</span></div>
+                <a href="#contact" class="btn btn-secondary btn-sm">Inquire Room</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Room 3 -->
+          <article class="room-card">
+            <div class="room-thumb">
+              <span class="room-tag">5 Min Walk to Berkeley</span>
+              <span class="room-verified">✓ Verified</span>
+              <img src="https://loremflickr.com/600/400/room,cozy/108" alt="Cozy UC Berkeley Room" onerror="this.onerror=null;this.src='https://picsum.photos/seed/room203/600/400'">
+            </div>
+            <div class="room-body">
+              <div class="room-location">UC Berkeley Telegraph Ave</div>
+              <h3 class="room-title">Cozy Balcony Bedroom near Sproul</h3>
+              <p class="room-desc">Private balcony access, large closet space, and shared gourmet kitchen in renovated home.</p>
+              <div class="room-specs">
+                <span class="spec-pill">Balcony</span>
+                <span class="spec-pill">Female Roommates</span>
+                <span class="spec-pill">High-Speed WiFi</span>
+              </div>
+              <div class="room-footer">
+                <div class="room-price">$950 <span>/ month</span></div>
+                <a href="#contact" class="btn btn-secondary btn-sm">Inquire Room</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Room 4 -->
+          <article class="room-card">
+            <div class="room-thumb">
+              <span class="room-tag">4 Min Bus to UT Austin</span>
+              <span class="room-verified">✓ Verified</span>
+              <img src="https://loremflickr.com/600/400/flat,bedroom/112" alt="West Campus Studio" onerror="this.onerror=null;this.src='https://picsum.photos/seed/room204/600/400'">
+            </div>
+            <div class="room-body">
+              <div class="room-location">UT Austin West Campus</div>
+              <h3 class="room-title">Bright Studio Unit with Pool Access</h3>
+              <p class="room-desc">Includes access to complex swimming pool, rooftop study deck, and subterranean bike garage.</p>
+              <div class="room-specs">
+                <span class="spec-pill">Pool & Gym</span>
+                <span class="spec-pill">Private Kitchenette</span>
+                <span class="spec-pill">Pet Friendly</span>
+              </div>
+              <div class="room-footer">
+                <div class="room-price">$820 <span>/ month</span></div>
+                <a href="#contact" class="btn btn-secondary btn-sm">Inquire Room</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Room 5 -->
+          <article class="room-card">
+            <div class="room-thumb">
+              <span class="room-tag">6 Min Walk to UMich</span>
+              <span class="room-verified">✓ Verified</span>
+              <img src="https://loremflickr.com/600/400/decor,bedroom/113" alt="Ann Arbor Student Suite" onerror="this.onerror=null;this.src='https://picsum.photos/seed/room205/600/400'">
+            </div>
+            <div class="room-body">
+              <div class="room-location">University of Michigan</div>
+              <h3 class="room-title">Fully Furnished Central Campus Suite</h3>
+              <p class="room-desc">Queen bed frame included with ergonomic desk and chair. All heat and water charges covered.</p>
+              <div class="room-specs">
+                <span class="spec-pill">Heat Included</span>
+                <span class="spec-pill">Smart Lock</span>
+                <span class="spec-pill">Study Lounge</span>
+              </div>
+              <div class="room-footer">
+                <div class="room-price">$890 <span>/ month</span></div>
+                <a href="#contact" class="btn btn-secondary btn-sm">Inquire Room</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Room 6 -->
+          <article class="room-card">
+            <div class="room-thumb">
+              <span class="room-tag">10 Min Walk to Northwestern</span>
+              <span class="room-verified">✓ Verified</span>
+              <img src="https://loremflickr.com/600/400/loft,apartment/114" alt="Evanston Loft Room" onerror="this.onerror=null;this.src='https://picsum.photos/seed/room206/600/400'">
+            </div>
+            <div class="room-body">
+              <div class="room-location">Northwestern Evanston</div>
+              <h3 class="room-title">Spacious Top Floor Bedroom Loft</h3>
+              <p class="room-desc">High ceilings, wooden hardwood floors, huge double windows, and reserved off-street parking.</p>
+              <div class="room-specs">
+                <span class="spec-pill">Parking Space</span>
+                <span class="spec-pill">Hardwood Floor</span>
+                <span class="spec-pill">Quiet Building</span>
+              </div>
+              <div class="room-footer">
+                <div class="room-price">$1,050 <span>/ month</span></div>
+                <a href="#contact" class="btn btn-secondary btn-sm">Inquire Room</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <div class="container">
+      <div class="cta-band">
+        <h2>Can't find your ideal campus location?</h2>
+        <p>Set up a free room alert and be notified the moment a new verified room opens near your university.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="#signup" class="btn">Set Up Room Alert</a>
+          <a href="#contact" class="btn" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3);">Contact Housing Specialist</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- PAGE 3: FOR LANDLORDS -->
+  <main data-page="landlords" class="page-route" hidden>
+    <section>
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow">For Property Owners & Landlords</div>
+          <h2>Rent your spare rooms to verified students safely</h2>
+          <p>Fill vacancies faster with reliable student tenants, guaranteed online rent payments, and zero listing fee promos.</p>
+        </div>
+
+        <div class="grid-2" style="align-items: center; margin-bottom: 4rem;">
+          <div>
+            <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem;">Why list on CampusCribs over general classifieds?</h3>
+            <p style="color: var(--muted); margin-bottom: 1.5rem;">Managing student housing shouldn't mean endless back-and-forth phone calls or unreliable tenants. We streamline everything from background checks to lease execution.</p>
+            
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+              <li style="display: flex; gap: 0.75rem; align-items: start;">
+                <span style="color: var(--accent); font-weight: 800; font-size: 1.2rem;">✓</span>
+                <div>
+                  <strong>Student ID & Guarantor Verification:</strong> Every applicant provides active university status and parent/guarantor financial verification.
+                </div>
+              </li>
+              <li style="display: flex; gap: 0.75rem; align-items: start;">
+                <span style="color: var(--accent); font-weight: 800; font-size: 1.2rem;">✓</span>
+                <div>
+                  <strong>0% Broker Commission:</strong> You keep 100% of your rent payments with direct ACH deposits to your bank account.
+                </div>
+              </li>
+              <li style="display: flex; gap: 0.75rem; align-items: start;">
+                <span style="color: var(--accent); font-weight: 800; font-size: 1.2rem;">✓</span>
+                <div>
+                  <strong>Automated Lease Agreements:</strong> Standard state-compliant student lease templates generated automatically.
+                </div>
+              </li>
+            </ul>
+
+            <a href="#signup" class="btn btn-accent">List Your Room For Free</a>
+          </div>
+
+          <!-- LANDLORD ESTIMATOR CARD -->
+          <div class="calc-card">
+            <h3>Rental Income Estimator</h3>
+            <p style="color: #94A3B8; font-size: 0.95rem;">Based on average student room demand in major university towns:</p>
+            
+            <div style="margin: 1.5rem 0;">
+              <span style="font-size: 0.85rem; color: #CBD5E1; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;">Estimated Annual Revenue</span>
+              <div class="calc-result">$13,200 <span style="font-size: 1rem; color: #94A3B8; font-weight: 500;">/ year per room</span></div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.08); padding: 1rem; border-radius: var(--radius-sm); font-size: 0.85rem; color: #E2E8F0;">
+              💡 <strong>Pro Tip:</strong> Including high-speed WiFi and basic utility bills increases inquiry speed by 40%.
+            </div>
+          </div>
+        </div>
+
+        <!-- LANDLORD HOW IT WORKS -->
+        <div class="section-header" style="margin-bottom: 2.5rem;">
+          <h2>How Landlords List in 3 Easy Steps</h2>
+        </div>
+
+        <div class="grid-3">
+          <div class="feature-card">
+            <div class="icon-badge">📸</div>
+            <h3>1. Create Listing</h3>
+            <p>Upload photos, set room dimensions, specify distance to university, and list house rules or utility splits.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-badge">💬</div>
+            <h3>2. Screen Applicants</h3>
+            <p>Review student profiles, major, move-in timeline, and message interested candidates directly in our secure chat.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-badge">💰</div>
+            <h3>3. Receive Auto-Payments</h3>
+            <p>Sign lease online and collect security deposits and monthly rent with automated bank transfers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <div class="container">
+      <div class="cta-band">
+        <h2>Start filling your vacancies today</h2>
+        <p>List your property on CampusCribs for free and start receiving inquiries from verified students in under 24 hours.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="#signup" class="btn">Post a Room Listing</a>
+          <a href="#contact" class="btn" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3);">Talk to Landlord Advisor</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- PAGE 4: ABOUT US -->
+  <main data-page="about" class="page-route" hidden>
+    <section>
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow">Our Mission</div>
+          <h2>Making student housing safe, affordable, and stress-free</h2>
+          <p>Founded in 2021 by university alumni who experienced the frustration of sketchy room rentals and ridiculous broker fees firsthand.</p>
+        </div>
+
+        <div class="grid-2" style="align-items: center; margin-bottom: 4rem;">
+          <img src="https://loremflickr.com/600/400/students,university/115" alt="Students studying together" style="width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow);" onerror="this.onerror=null;this.src='https://picsum.photos/seed/about401/600/400'">
+          <div>
+            <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 1rem;">Bridging the gap between students and verified homeowners</h3>
+            <p style="color: var(--muted); margin-bottom: 1rem;">Finding a home near campus should be an exciting milestone, not a source of anxiety. We built CampusCribs to bring transparency, safety verification, and fairness back into college town housing.</p>
+            <p style="color: var(--muted); margin-bottom: 1.5rem;">Today, CampusCribs connects thousands of students each semester with verified room owners across North America, facilitating transparent digital leases and safe online rent payments.</p>
+            
+            <div style="display: flex; gap: 2rem;">
+              <div>
+                <strong style="font-size: 1.8rem; color: var(--primary); display: block;">99.8%</strong>
+                <span style="font-size: 0.85rem; color: var(--muted);">On-time Rent Payment Rate</span>
+              </div>
+              <div>
+                <strong style="font-size: 1.8rem; color: var(--accent); display: block;">24/7</strong>
+                <span style="font-size: 0.85rem; color: var(--muted);">Student & Landlord Support</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- OUR VALUES -->
+        <div class="section-header" style="margin-bottom: 2.5rem;">
+          <h2>Our Core Principles</h2>
+        </div>
+
+        <div class="grid-3">
+          <div class="feature-card">
+            <div class="icon-badge">🛡️</div>
+            <h3>Safety First</h3>
+            <p>Every profile undergoes rigorous background and student identity checks before engaging on the platform.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-badge">💡</div>
+            <h3>Total Transparency</h3>
+            <p>No hidden charges, surprise broker commissions, or misleading lease clauses. What you see is what you pay.</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-badge">🌱</div>
+            <h3>Community Centric</h3>
+            <p>We foster positive, respectful living environments where students can thrive academically and socially.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BAND -->
+    <div class="container">
+      <div class="cta-band">
+        <h2>Join our growing campus community</h2>
+        <p>Whether you're moving off-campus for the first time or looking for trusted tenants, we've got you covered.</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="#signup" class="btn">Join CampusCribs Free</a>
+          <a href="#rooms" class="btn" style="background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3);">Explore Rooms</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- PAGE 5: CONTACT -->
+  <main data-page="contact" class="page-route" hidden>
+    <section>
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow">Get In Touch</div>
+          <h2>We're here to help you find or list your room</h2>
+          <p>Have questions about tenant verification, lease agreements, or campus coverage? Drop us a message.</p>
+        </div>
+
+        <div class="grid-2">
+          <!-- CONTACT FORM -->
+          <div style="background: var(--surface); padding: 2.5rem; border-radius: var(--radius-lg); border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+            <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 1.5rem;">Send Us a Message</h3>
+            
+            <form style="display: flex; flex-direction: column; gap: 1.25rem;" action="#contact" method="POST">
+              <div class="form-group">
+                <label for="contact-name">Full Name</label>
+                <input type="text" id="contact-name" class="form-control" placeholder="e.g. Jordan Lee" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-email">Email Address</label>
+                <input type="email" id="contact-email" class="form-control" placeholder="jordan@university.edu" required>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-role">I am a...</label>
+                <select id="contact-role" class="form-control">
+                  <option value="student">Student Looking for a Room</option>
+                  <option value="landlord">Landlord / Room Owner</option>
+                  <option value="parent">Parent or Guarantor</option>
+                  <option value="other">General Inquiry</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="contact-msg">Message</label>
+                <textarea id="contact-msg" class="form-control" rows="4" placeholder="How can we assist you today?" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+          </div>
+
+          <!-- OFFICE INFO & FAQ -->
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div style="background: var(--surface); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+              <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">Support Contact Channels</h3>
+              
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.95rem;">
+                <li style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span style="font-size: 1.2rem;">📧</span>
+                  <span><strong>Email:</strong> support@campuscribs.com</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span style="font-size: 1.2rem;">📞</span>
+                  <span><strong>Student Helpline:</strong> +1 (800) 555-CRIBS</span>
+                </li>
+                <li style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span style="font-size: 1.2rem;">📍</span>
+                  <span><strong>HQ:</strong> 100 University Ave, Suite 400, Boston, MA</span>
+                </li>
+              </ul>
+            </div>
+
+            <div style="background: var(--primary-light); padding: 2rem; border-radius: var(--radius-lg); border: 1px solid rgba(37,99,235,0.2);">
+              <h4 style="font-size: 1.1rem; color: var(--primary-dark); font-weight: 800; margin-bottom: 0.5rem;">Emergency Housing Support?</h4>
+              <p style="font-size: 0.9rem; color: var(--ink); margin-bottom: 1rem;">Need an urgent room transfer or immediate move-in assistance within 48 hours?</p>
+              <a href="#contact" class="btn btn-primary btn-sm">Priority Support Hotline</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- PAGE 6: SIGN IN -->
+  <main data-page="signin" class="page-route" hidden>
+    <div class="container">
+      <div class="auth-card">
+        <h1>Welcome Back</h1>
+        <p class="auth-sub">Sign in to manage your room inquiries or listing dashboard</p>
+
+        <form class="auth-form" action="#home" method="POST">
+          <div class="role-toggle">
+            <button type="button" class="role-btn active">Student</button>
+            <button type="button" class="role-btn">Landlord</button>
+          </div>
+
+          <div class="form-group">
+            <label for="signin-email">University or Personal Email</label>
+            <input type="email" id="signin-email" class="form-control" placeholder="you@university.edu" required>
+          </div>
+
+          <div class="form-group">
+            <label for="signin-pass">Password</label>
+            <input type="password" id="signin-pass" class="form-control" placeholder="••••••••" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Sign In to CampusCribs</button>
+        </form>
+
+        <div class="auth-footer-link">
+          Don't have an account yet? <a href="#signup">Create an Account</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- PAGE 7: SIGN UP -->
+  <main data-page="signup" class="page-route" hidden>
+    <div class="container">
+      <div class="auth-card">
+        <h1>Create Your Account</h1>
+        <p class="auth-sub">Join CampusCribs as a student room seeker or property owner</p>
+
+        <form class="auth-form" action="#home" method="POST">
+          <div class="role-toggle">
+            <button type="button" class="role-btn active">I'm a Student</button>
+            <button type="button" class="role-btn">I'm a Landlord</button>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-name">Full Name</label>
+            <input type="text" id="signup-name" class="form-control" placeholder="Alex Morgan" required>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-email">Email Address</label>
+            <input type="email" id="signup-email" class="form-control" placeholder="alex@university.edu" required>
+          </div>
+
+          <div class="form-group">
+            <label for="signup-pass">Password</label>
+            <input type="password" id="signup-pass" class="form-control" placeholder="Create a strong password" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Create Free Account</button>
+        </form>
+
+        <div class="auth-footer-link">
+          Already have an account? <a href="#signin">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- PERSISTENT FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div class="foot-col">
+          <div class="logo" style="color: #fff; margin-bottom: 1rem;">
+            <div class="logo-icon">🏠</div>
+            Campus<span style="color: #60A5FA;">Cribs</span>
+          </div>
+          <p style="font-size: 0.85rem; line-height: 1.6;">Connecting students with verified landlords near university campuses. Safe, transparent, and broker-fee free.</p>
+        </div>
+
+        <div class="foot-col">
+          <h4>For Students</h4>
+          <ul>
+            <li><a href="#rooms">Search Rooms</a></li>
+            <li><a href="#rooms">Rooms near Harvard</a></li>
+            <li><a href="#rooms">Rooms near NYU</a></li>
+            <li><a href="#rooms">Rooms near UC Berkeley</a></li>
+            <li><a href="#about">Roommate Safety Guide</a></li>
+          </ul>
+        </div>
+
+        <div class="foot-col">
+          <h4>For Landlords</h4>
+          <ul>
+            <li><a href="#landlords">List Your Property</a></li>
+            <li><a href="#landlords">Rental Yield Calculator</a></li>
+            <li><a href="#landlords">Tenant Verification</a></li>
+            <li><a href="#signin">Landlord Portal</a></li>
+          </ul>
+        </div>
+
+        <div class="foot-col">
+          <h4>Company & Support</h4>
+          <ul>
+            <li><a href="#about">About Our Mission</a></li>
+            <li><a href="#contact">Contact Support</a></li>
+            <li><a href="#signin">Sign In</a></li>
+            <li><a href="#signup">Create Account</a></li>
+            <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter / X</a></li>
+            <li><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="foot-bottom">
+        <div>© 2025 CampusCribs Technologies Inc. All rights reserved.</div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="#about">Privacy Policy</a>
+          <a href="#about">Terms of Service</a>
+          <a href="#contact">Trust & Safety</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script id="__mintsite_link_interceptor__">(function(){if(window.__mintsiteLinkInterceptor)return;window.__mintsiteLinkInterceptor=true;function showPage(name){  var pages=document.querySelectorAll('[data-page]');  if(pages.length<2)return false;  var found=false;  for(var i=0;i<pages.length;i++){    var n=(pages[i].getAttribute('data-page')||'').toLowerCase();    if(n===name){pages[i].hidden=false;pages[i].style.display='';found=true}    else pages[i].hidden=true;  }  if(found)window.scrollTo({top:0,behavior:'smooth'});  return found;}document.addEventListener('click',function(e){  var a=e.target.closest&&e.target.closest('a');  if(!a)return;  var href=(a.getAttribute('href')||'').trim();  if(href.charAt(0)==='#'&&href.length>1){    e.preventDefault();    var id=href.slice(1).toLowerCase();    if(showPage(id))return;    var el=document.getElementById(id);    if(el){el.scrollIntoView({behavior:'smooth',block:'start'})}  } else if(href&&href!=='#'&&href.indexOf('javascript:')!==0){    e.preventDefault();    try{window.open(href,'_blank','noopener,noreferrer')}catch(_){}  }},true);})();</script>
+</body>
+</html>
